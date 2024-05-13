@@ -1,0 +1,541 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- <link rel="stylesheet" href="addtocart.css"> -->
+    <script src="https://kit.fontawesome.com/92d70a2fd8.js" crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'poppins', sans-serif;
+            font-size: 18px;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .header {
+            height: 80px;
+            width: 70%;
+            background-color: rgb(252, 151, 63);
+            border-radius: 3px;
+            margin: 30px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+        }
+
+        .header .logo {
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .cart {
+            display: flex;
+            background-color: white;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 10px;
+            border-radius: 3px;
+            width: 80px;
+        }
+
+        .fa-solid {
+            color: rgb(252, 151, 63);
+        }
+
+        .cart p {
+            height: 22px;
+            width: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 22px;
+            background-color: rgb(252, 151, 63);
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            width: 70%;
+            margin-bottom: 30px;
+        }
+
+        #root {
+            width: 60%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+        }
+
+        .sidebar {
+            width: 40%;
+            border-radius: 5px;
+            background-color: #eee;
+            margin-left: 20px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .head {
+            background-color: rgb(252, 151, 63);
+            border-radius: 3px;
+            height: 40px;
+            padding: 10px;
+            margin-bottom: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .foot {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0px;
+            padding: 10px 0px;
+            border-top: 1px solid #333;
+        }
+
+        .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgb(252, 151, 63);
+            border-radius: 5px;
+            padding: 15px;
+        }
+
+        .img-box {
+            width: 100%;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .images {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .bottom {
+            margin-top: 20px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 110px;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: red;
+        }
+
+        button {
+            width: 100%;
+            position: relative;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(252, 151, 63);
+            padding: 7px 25px;
+            cursor: pointer;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: white;
+            border-bottom: 1px solid #aaa;
+            border-radius: 3px;
+            margin: 10px 10px;
+        }
+
+        .row-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50px;
+            border: 1px solid rgb(252, 151, 63);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rowimg {
+            max-width: 43px;
+            max-height: 43px;
+            border-radius: 50%;
+        }
+
+        .fa-trash:hover {
+            cursor: pointer;
+            color: #333;
+        }
+
+        .btnpay {
+            width: 100%;
+            position: relative;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(252, 151, 63);
+            padding: 7px 25px;
+            cursor: pointer;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btnpay:hover {
+            background-color: black;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <p class="logo">Add to Cart</p>
+            <div class="cart"><i class="fa-solid fa-cart-shopping"></i><p id="count">0</p></div>
+        </div>
+        <div class="container">
+            <div id="root"></div>
+            <div class="sidebar">
+                <div class="head"><p>My Cart</p></div>
+                <div id="cartItem">Your cart is empty</div>
+                <div class="foot">
+                    <h3>Total</h3>
+                    <h2 id="total">$ 0.00</h2>
+                </div>
+                <a class="btnpay" href="payment.html">Payment</a>
+            </div>
+        </div>
+    
+        <script>
+
+const data = [
+    {
+      id: 1,
+      name: "Shirt-yellow",
+      img: "images/womens/w5.jpeg", 
+      amt: 400,
+      seller: "Boltt Store",
+      catagory: "Women",
+       color:"yellow",
+    },
+  
+    {
+      id: 2,
+      name: "Naviblue suit",
+      img: "images/mens/m1.jpeg",
+      amt: 1300,
+      seller: "Noise Store",
+      catagory: "Men",
+      color:"Naviblue",
+    },
+  
+    {
+      id: 3,
+      name: "slopt mintigreen",
+      img: "images/kids/k1.jpg",
+      amt: 500,
+      seller: "Rajesh Watchs",
+      catagory: "Kids",
+      color:"mintigreen",
+    },
+    {
+      id: 4,
+      name: "Silver Chain",
+      img: "images/accessiores/a1.jpeg",
+      amt: 550,
+      seller: "Stonehenge Retail",
+      catagory: "Accessories",
+      color:"Silver",
+    },
+    {
+      id: 5,
+      name: "Pump jacket",
+      img: "images/mens/m2.jpeg",
+      amt: 650,
+      seller: "Honor india",
+      catagory: "Men",
+      color:"mintigreen",
+    },
+  
+    {
+      id: 6,
+      name: "Women's gray jacket ",
+      img:"images/womens/w4.jpeg",
+      amt: 900,
+      seller: "IKALL Store",
+      catagory: "Women",
+      color:"gray",
+    },
+  
+    {
+      id: 7,
+      name: "suit mintigreen",
+      img: "images/mens/m3.jpeg",
+      amt: 1400,
+      seller: "Oppo Store",
+      catagory: "Men",
+      color:"mintigreen",
+    },
+    {
+        id: 8,
+        name: "Gray longing ",
+        img:  "images/accessiores/a2.jpeg",
+        amt: 300,
+        seller: "ZEBRONICS Store",
+        catagory: "Accessories",
+        color:"gray",
+      },
+    {
+      id: 9,
+      name: "Yellow pajamas",
+      img:  "images/womens/w2.jpeg",
+      amt: 1100,
+      seller: "Accer Store",
+      catagory: "Women",
+      color:"yellow",
+    },
+    {
+      id: 10,
+      name: "Baby set",
+      img: "images/kids/k2.jpg",
+      amt: 800,
+      seller: "Samsung Store",
+      catagory: "Kids",
+      color:"pink",
+    },
+  
+    {
+      id: 11,
+      name: "Islamic dress ",
+      img:  "images/womens/w3.jpeg",
+      amt: 700,
+      seller: "ZEBRONICS Store",
+      catagory: "Women",
+      color:"pink",
+    },
+    {
+        id: 12,
+        name: "Children's striped T-shirt ",
+        img:  "images/kids/k3.jpg",
+        amt: 200,
+        seller: "ZEBRONICS Store",
+        catagory: "Kids",
+        color:"gray",
+      },
+      {
+        id: 13,
+        name: "Women's watch ",
+        img:   "images/accessiores/a3.jpeg",
+        amt: 800,
+        seller: "ZEBRONICS Store",
+        catagory: "Accessories",
+        color:"pink",
+      },
+  ];
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const productId = getProductIdFromUrl();
+    const product = getProductById(productId);
+
+    if (product) {
+        displayProductDetails(product);
+    } else {
+        // Handle the case when the product is not found
+        console.error("Product not found");
+    }
+});
+
+function getProductIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return parseInt(urlParams.get("id"));
+}
+
+function getProductById(productId) {
+    return data.find(product => product.id === productId);
+}
+
+function displayProductDetails(product) {
+    const productDetailsContainer = document.getElementById("productDetails");
+    document.getElementById('root').innerHTML = `
+       
+    <div class='box'>
+        <div class='img-box'>
+            <img class='images' src=${product.img}></img>
+        </div>
+        <div class='bottom'>
+            <p>${product.name}</p>
+            <h2>$ ${product.amt}.00</h2>
+            <button onclick='addToCart(${product.id})'>Add to cart</button>
+        </div>
+    </div>`;
+
+   
+}
+
+
+
+var cart = [];
+
+function addToCart(productId) {
+    const selectedProduct = getProductById(productId);
+    cart.push(selectedProduct);
+    
+    displayCart();
+}
+
+function delElement(index) {
+    cart.splice(index, 1);
+    displayCart();
+}
+
+function displayCart() {
+    let total = 0;
+    document.getElementById("count").innerHTML = cart.length;
+    if (cart.length === 0) {
+        document.getElementById('cartItem').innerHTML = "Your cart is empty";
+        document.getElementById("total").innerHTML = "$ " + 0 + ".00";
+    } else {
+        document.getElementById("cartItem").innerHTML = cart.map((items, index) => {
+            const { img, name, amt } = data.find(product => product.id === items.id);
+            total = total + amt;
+            document.getElementById("total").innerHTML = "$ " + total.toFixed(2);
+            return `
+                <div class='cart-item'>
+                    <div class='row-img'>
+                        <img class='rowimg' src=${img}>
+                    </div>
+                    <p style='font-size:12px;'>${name}</p>
+                    <h2 style='font-size: 15px;'>$ ${amt}.00</h2>
+                    <i class='fa-solid fa-trash' onclick='delElement(${index})'></i>
+                </div>`;
+        }).join('');
+    }
+}
+
+function getProductById(productId) {
+    
+                return data.find(product => product.id === productId);
+            }
+
+
+//--------------------------------------
+
+    //         const urlParams = new URLSearchParams(window.location.search);
+    //         const productId = parseInt(urlParams.get("id"));
+    //         const selectedProduct = getProductById(productId);
+    
+    //         document.getElementById('root').innerHTML = `
+    // <div class='box'>
+    //     <div class='img-box'>
+    //         <img class='images' src=${selectedProduct.img}></img>
+    //     </div>
+    //     <div class='bottom'>
+    //         <p>${selectedProduct.name}</p>
+    //         <h2>$ ${selectedProduct.amt}.00</h2>
+    //         <button onclick='addToCart(${productId})'>Add to cart</button>
+    //     </div>
+    // </div>`;
+
+    
+            // var cart = [];
+    
+            // function addToCart(productId) {
+            //     const selectedProduct = getProductById(productId);
+            //     cart.push(selectedProduct);
+            //     displayCart();
+            // }
+    
+            // function delElement(a) {
+            //     cart.splice(a, 1);
+            //     displayCart();
+            // }
+    
+            // function displayCart() {
+            //     let j = 0, total = 0;
+            //     document.getElementById("count").innerHTML = cart.length;
+            //     if (cart.length == 0) {
+            //         document.getElementById('cartItem').innerHTML = "Your cart is empty";
+            //         document.getElementById("total").innerHTML = "$ " + 0 + ".00";
+            //     } else {
+            //         document.getElementById("cartItem").innerHTML = cart.map((items) => {
+            //             const { image, title, price } = items;
+            //             total = total + price;
+            //             document.getElementById("total").innerHTML = "$ " + total.toFixed(2);
+            //             return `
+            //                 <div class='cart-item'>
+            //                     <div class='row-img'>
+            //                         <img class='rowimg' src=${image}>
+            //                     </div>
+            //                     <p style='font-size:12px;'>${title}</p>
+            //                     <h2 style='font-size: 15px;'>$ ${price}.00</h2>
+            //                     <i class='fa-solid fa-trash' onclick='delElement(${j++})'></i>
+            //                 </div>`;
+            //         }).join('');
+            //     }
+            // }
+    
+
+//             var cart =[];
+
+// function addtocart(a){
+//     cart.push({...categories[a]});
+//     displaycart();
+// }
+// function delElement(a){
+//     cart.splice(a, 1);
+//     displaycart();
+// }
+
+// function displaycart(){
+//     let j = 0, total=0;
+//     document.getElementById("count").innerHTML=cart.length;
+//     if(cart.length==0){
+//         document.getElementById('cartItem').innerHTML = "Your cart is empty";
+//         document.getElementById("total").innerHTML = "$ "+0+".00";
+//     }
+//     else{
+//         document.getElementById("cartItem").innerHTML = cart.map((items)=>
+//         {
+//             var {image, title, price} = items;
+//             total=total+price;
+//             document.getElementById("total").innerHTML = "$ "+total+".00";
+//             return(
+//                 `<div class='cart-item'>
+//                 <div class='row-img'>
+//                     <img class='rowimg' src=${image}>
+//                 </div>
+//                 <p style='font-size:12px;'>${title}</p>
+//                 <h2 style='font-size: 15px;'>$ ${price}.00</h2>`+
+//                 "<i class='fa-solid fa-trash' onclick='delElement("+ (j++) +")'></i></div>"
+//             );
+//         }).join('');
+//     }}
+
+
+           
+        </script>
+
+    </body>
+</html>

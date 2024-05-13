@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+</head>
+<body>
+
+    <!-- Product list with clickable elements -->
+    <div class="product" data-product-id="1" onclick="viewDetails(1)">
+        <h3>Product 1</h3>
+        <p>Description for Product 1</p>
+    </div>
+
+    <div class="product" data-product-id="2" onclick="viewDetails(2)">
+        <h3>Product 2</h3>
+        <p>Description for Product 2</p>
+    </div>
+
+    <!-- Include necessary scripts -->
+    <script >
+
+
+// Function to navigate to details page with product ID
+function viewDetails(productId) {
+    window.location.href = `details.html?id=${productId}`;
+}
+
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login/Register Form</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      max-width: 400px;
+      margin: 100px auto;
+    }
+    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+      color: orange;
+      background-color: white; /* Set the background color as needed */
+      border-color: orange;
+    }
+    .nav-tabs .nav-link {
+      color: rgb(4, 0, 0); /* Set the default text color for non-active tabs */
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <ul class="nav nav-tabs" id="myTabs">
+    <li class="nav-item">
+      <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login">Login</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="register-tab" data-toggle="tab" href="#register">Register</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <!-- Login Form -->
+    <div class="tab-pane fade show active" id="login">
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginUsername">Username</label>
+          <input type="text" class="form-control" id="loginUsername" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" class="form-control" id="loginPassword" required>
+        </div>
+        <button style="background-color: orange; border-color: orange;" class="btn btn-warning">Login</button>
+      </form>
+    </div>
+
+    <!-- Register Form -->
+    <div class="tab-pane fade" id="register">
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="registerUsername">Username</label>
+          <input type="text" class="form-control" id="registerUsername" required>
+        </div>
+        <div class="form-group">
+          <label for="registerEmail">Email</label>
+          <input type="email" class="form-control" id="registerEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="registerPassword">Password</label>
+          <input type="password" class="form-control" id="registerPassword" required>
+        </div>
+        <button style="background-color: orange; border-color: orange;" class="btn btn-warning">Register</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+  // Activate tabs
+  $(document).ready(function(){
+    $('#myTabs a').click(function (e) {
+      e.preventDefault()
+      $(this).tab('show')
+    })
+  });
+
+  // Handle form submissions
+  $('#loginForm').submit(function (e) {
+    e.preventDefault();
+    // Add your login logic here
+    // For demonstration purposes, always redirect to index.html
+    alert('Login successful!');
+    window.location.href = 'index.html';
+  });
+
+  $('#registerForm').submit(function (e) {
+    e.preventDefault();
+    // Add your registration logic here
+    // For demonstration purposes, always redirect to index.html
+    alert('Registration successful!');
+    window.location.href = 'index.html';
+  });
+</script>
+
+</body>
+</html>

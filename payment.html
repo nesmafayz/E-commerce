@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <style>
+    *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root{
+    --text-color :rgb(110, 110, 110);
+}
+.paybody{
+    display: flex;
+    min-height: 100vh;
+    background-color: rgb(199, 199, 199);
+    align-items: center;
+    justify-content: center;
+}
+.paycontainer{
+    width: 350px;
+    background: #fff;
+    padding: 30px;
+    position: relative;
+}
+.payh6{
+    font-size: 20px;
+    color: var(--text-color);
+}
+
+.payh1{
+    padding: 30px 0px;
+    font-size: 40px;
+    color: var(--text-color);
+}
+form label{
+    color: var(--text-color);
+    text-transform: uppercase;
+    position: relative;
+    font-size: 10px;
+    word-spacing: 4px;
+}
+form select{
+    width: 100%;
+    outline: none;
+    border:none;
+    border-bottom: 1px solid rgb(223, 223, 223);
+    text-transform: capitalize;
+    padding-top: 3px;
+    color: var(--text-color);
+    padding-bottom: 3px;
+    font-size: 18px;
+    margin-left: -3px;
+    margin-bottom: 20px;
+    background-color:transparent;
+
+}
+form #cardno{
+    width: 100%;
+    outline: none;
+    border:none;
+    border-bottom: 1px solid rgb(223, 223, 223);
+    padding-top: 5px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    padding-right: 30px;
+    color: var(--text-color);
+    font-size: 18px;
+    background-color:transparent;
+}
+form label img{
+    position: absolute;
+    left: 264px;
+    top:17px;
+    width: 20px;
+    height: 20px;
+}
+.float{
+    display: flex;
+}
+#validtill, #cvv{
+    border: none;
+    border-bottom: 1px solid rgb(207, 207, 207);
+    outline: none;
+    width: 130px;
+    padding-top: 14px;
+    margin-bottom: 56px;
+    color: var(--text-color);
+    background-color:transparent;
+    font-size: 18px;
+}
+.payp{
+    margin-left: 25px;
+    margin-bottom: 56px;
+    margin-top: -20px;
+    font-size: 16px;
+    text-transform: none;
+}
+.paybutton{
+    border: none;
+    outline: none;
+    background:rgb(252, 151, 63);
+    color: rgb(31, 30, 30);
+    width: 100%;
+    height:40px;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+.lightbox-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-item {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+   </style>
+    
+        <title>Payment</title>
+    </head>
+    
+    <body class="paybody">
+        <div class="paycontainer">
+            <h6 class="payh6">Checkout</h6>
+            <h1 class="payh1">Payment</h1>
+            <form action="" onsubmit="return validateForm()">
+                <label for="country">Country
+                    <select name="country" id="country">
+                        <option value="egypt">egypt</option>
+                        <option value="germany">germany</option>
+                        <option value="england">england</option>
+                        <option value="india">india</option>
+                    </select>
+                </label>
+                <label for="cardno">Card Number
+                    <input type="text" name="cardno" id="cardno" maxlength="19" onkeypress="cardspace()" />
+                </label>
+                <div class="float">
+                    <label for="validtill">Valid till
+                        <input type="text" name="validtill" id="validtill" maxlength="7" onkeypress="addSlashes()" />
+                    </label>
+                    <label for="cvv">Cvv
+                        <input type="text" name="cvv" id="cvv" maxlength="3" />
+                    </label>
+                </div>
+                <label for="checkbox">
+                    <input type="checkbox" name="checkbox" id="checkbox" />
+                    <p class="payp">Payment Address is the same as the Delivery Address</p>
+                </label>
+                <button class="paybutton">Pay</button>
+            </form>
+        </div>
+    
+        <div class="lightbox-container" id="successMessage">
+            <div class="lightbox-item">
+                <h2>Payment Successful!</h2>
+                <p>Thank you for your payment.</p>
+                <button onclick="closeSuccessMessage()" class="paybutton">Close</button>
+            </div>
+        </div>
+    
+        <script>
+          
+    function validateForm() {
+        var country = document.getElementById('country').value;
+        var cardNumber = document.getElementById('cardno').value;
+        var validTill = document.getElementById('validtill').value;
+        var cvv = document.getElementById('cvv').value;
+
+        // Trim any leading or trailing whitespaces
+        country = country.trim();
+        cardNumber = cardNumber.trim();
+        validTill = validTill.trim();
+        cvv = cvv.trim();
+
+        // Check if any of the required fields are empty
+        if (!country || !cardNumber || !validTill || !cvv) {
+            alert('Please fill in all required fields.');
+            return false; // Prevent form submission
+        }
+
+        // Additional validation logic can be added here if needed
+
+        // If all validations pass, show the success message
+        showSuccessMessage();
+
+        return false; // Prevent form submission
+    }
+
+    function showSuccessMessage() {
+        var lightbox = document.getElementById('successMessage');
+        lightbox.style.display = 'flex';
+
+        // Redirect to index.html after 2 seconds (adjust the delay as needed)
+        setTimeout(function() {
+            window.location.href = 'index.html';
+        }, 2000);
+    }
+
+    function closeSuccessMessage() {
+        var lightbox = document.getElementById('successMessage');
+        lightbox.style.display = 'none';
+    }
+
+    function cardspace() {
+        var carddigit = document.getElementById('cardno').value;
+        if (carddigit.length == 4 || carddigit.length == 9 || carddigit.length == 14) {
+            document.getElementById('cardno').value = carddigit + ' ';
+            document.getElementById('cardno').max = 1;
+        }
+    }
+
+    function addSlashes() {
+        var expire_date = document.getElementById('validtill').value;
+        if (expire_date.length == 2) {
+            document.getElementById('validtill').value = expire_date + '/';
+            document.getElementById('validtill').max = 1;
+        }
+    }
+</script>
+
+    </body>
+    
+    </html>
